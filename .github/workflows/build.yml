@@ -27,6 +27,13 @@ jobs:
       - name: Create Dummy Debug Keystore
         run: keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
 
+      - name: Inject Dummy Web Client ID if missing
+        run: |
+          STRINGS_FILE="app/src/main/res/values/strings.xml"
+          if [ -f "$STRINGS_FILE" ]; then
+            sed -i '/<\/resources>/i \    <string name="default_web_client_id">dummy_web_client_id_for_build<\/string>' "$STRINGS_FILE"
+          fi
+
       - name: Build Debug APK
         env:
           JAVA_TOOL_OPTIONS: "--add-opens=java.base/java.lang=ALL-UNNAMED"
