@@ -1,0 +1,6 @@
+{
+  "name": "Khahish",
+  "description": "Real-time messaging, audio and video calling, and user search app",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

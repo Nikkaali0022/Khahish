@@ -1,0 +1,123 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with display name and searchable username",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Auth UID" },
+        "username": { "type": "string", "description": "Unique handle lowercase" },
+        "displayName": { "type": "string", "description": "Full display name" },
+        "photoUrl": { "type": "string", "description": "Avatar URL" },
+        "phoneNumber": { "type": "string", "description": "Phone number" },
+        "bio": { "type": "string", "description": "User bio or status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp via serverTimestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp via serverTimestamp" }
+      },
+      "required": ["userId", "username", "displayName", "createdAt"]
+    },
+    "FriendRequest": {
+      "title": "FriendRequest",
+      "description": "Friend request sent from one user to another",
+      "type": "object",
+      "properties": {
+        "requestId": { "type": "string", "description": "Request identifier" },
+        "senderId": { "type": "string", "description": "Sender auth UID" },
+        "senderUsername": { "type": "string", "description": "Sender username" },
+        "receiverId": { "type": "string", "description": "Receiver auth UID" },
+        "receiverUsername": { "type": "string", "description": "Receiver username" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "declined"], "description": "Current status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp via serverTimestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp via serverTimestamp" }
+      },
+      "required": ["requestId", "senderId", "senderUsername", "receiverId", "receiverUsername", "status", "createdAt"]
+    },
+    "Friend": {
+      "title": "Friend",
+      "description": "Contact relationship under a user profile",
+      "type": "object",
+      "properties": {
+        "friendId": { "type": "string", "description": "Friend auth UID" },
+        "friendUsername": { "type": "string", "description": "Friend username" },
+        "friendDisplayName": { "type": "string", "description": "Friend display name" },
+        "friendPhotoUrl": { "type": "string", "description": "Friend avatar URL" },
+        "addedAt": { "type": "string", "format": "date-time", "description": "Added timestamp via serverTimestamp" }
+      },
+      "required": ["friendId", "friendUsername", "friendDisplayName", "addedAt"]
+    },
+    "ChatRoom": {
+      "title": "ChatRoom",
+      "description": "1-on-1 chat room metadata",
+      "type": "object",
+      "properties": {
+        "chatId": { "type": "string", "description": "Chat identifier" },
+        "participants": { "type": "array", "description": "List of user UIDs" },
+        "lastMessage": { "type": "string", "description": "Last sent message preview" },
+        "lastMessageSenderId": { "type": "string", "description": "Sender UID of last message" },
+        "lastMessageTimestamp": { "type": "string", "format": "date-time", "description": "Last message timestamp" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["chatId", "participants", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Chat message item inside a chat room",
+      "type": "object",
+      "properties": {
+        "messageId": { "type": "string", "description": "Message identifier" },
+        "chatId": { "type": "string", "description": "Chat identifier" },
+        "senderId": { "type": "string", "description": "Sender UID" },
+        "senderName": { "type": "string", "description": "Sender name" },
+        "text": { "type": "string", "description": "Text message content" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp via serverTimestamp" },
+        "isRead": { "type": "boolean", "description": "Read status" }
+      },
+      "required": ["messageId", "chatId", "senderId", "senderName", "text", "createdAt"]
+    },
+    "CallSession": {
+      "title": "CallSession",
+      "description": "Voice or video call session signaling",
+      "type": "object",
+      "properties": {
+        "callId": { "type": "string", "description": "Call identifier" },
+        "callerId": { "type": "string", "description": "Caller UID" },
+        "callerName": { "type": "string", "description": "Caller display name" },
+        "receiverId": { "type": "string", "description": "Receiver UID" },
+        "receiverName": { "type": "string", "description": "Receiver display name" },
+        "channelId": { "type": "string", "description": "Agora channel ID" },
+        "callType": { "type": "string", "enum": ["voice", "video"], "description": "Type of call" },
+        "status": { "type": "string", "enum": ["ringing", "accepted", "rejected", "ended"], "description": "Call status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["callId", "callerId", "callerName", "receiverId", "receiverName", "channelId", "callType", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profiles for identity and username search"
+    },
+    "/users/{userId}/friends/{friendId}": {
+      "schema": "Friend",
+      "description": "User contact list"
+    },
+    "/friendRequests/{requestId}": {
+      "schema": "FriendRequest",
+      "description": "Friend request invitations between users"
+    },
+    "/chats/{chatId}": {
+      "schema": "ChatRoom",
+      "description": "One-on-one conversation threads"
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Messages inside a conversation thread"
+    },
+    "/calls/{callId}": {
+      "schema": "CallSession",
+      "description": "Signaling for voice and video calling via Agora"
+    }
+  }
+}
