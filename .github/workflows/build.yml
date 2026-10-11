@@ -35,10 +35,13 @@ jobs:
             echo "WARNING: GOOGLE_SERVICES_JSON secret is missing!"
           fi
 
-      - name: Generate Keystore in Root and App Folders
+      - name: Generate Keystore and Properties
         run: |
-          keytool -genkey -v -keystore my-upload-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-key-alias -storepass password123 -keypass password123 -dname "CN=Android Release,O=Android,C=US"
-          cp my-upload-key.jks app/
+          keytool -genkey -v -keystore app/my-upload-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-key-alias -storepass password123 -keypass password123 -dname "CN=Android Release,O=Android,C=US"
+          echo "storePassword=password123" > app/keystore.properties
+          echo "keyAlias=my-key-alias" >> app/keystore.properties
+          echo "keyPassword=password123" >> app/keystore.properties
+          echo "storeFile=my-upload-key.jks" >> app/keystore.properties
 
       - name: Build Release APK
         env:
@@ -50,4 +53,3 @@ jobs:
         with:
           name: Khahish-Release-App
           path: app/build/outputs/apk/release/*.apk
-
