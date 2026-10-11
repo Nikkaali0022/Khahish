@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Release APK
 
 on:
   push:
@@ -24,23 +24,24 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Create Dummy Debug Keystore
-        run: keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
-
-      - name: Inject Dummy Web Client ID if missing
+      - name: Inject Google Services JSON
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: |
-          STRINGS_FILE="app/src/main/res/values/strings.xml"
-          if [ -f "$STRINGS_FILE" ]; then
-            sed -i '/<\/resources>/i \    <string name="default_web_client_id">dummy_web_client_id_for_build<\/string>' "$STRINGS_FILE"
+          if [ -n "$GOOGLE_SERVICES_JSON" ]; then
+            echo "$GOOGLE_SERVICES_JSON" > app/google-services.json
+            echo "google-services.json injected successfully."
+          else
+            echo "WARNING: GOOGLE_SERVICES_JSON secret is missing!"
           fi
 
-      - name: Build Debug APK
+      - name: Build Release APK
         env:
           JAVA_TOOL_OPTIONS: "--add-opens=java.base/java.lang=ALL-UNNAMED"
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleRelease --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Khahish-App
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: Khahish-Release-App
+          path: app/build/outputs/apk/release/app-release-unsigned.apk
