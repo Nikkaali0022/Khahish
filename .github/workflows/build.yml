@@ -1,4 +1,4 @@
-name: Build Release APK
+name: Build Release APK Secure
 
 on:
   push:
@@ -35,6 +35,11 @@ jobs:
             echo "WARNING: GOOGLE_SERVICES_JSON secret is missing!"
           fi
 
+      - name: Generate Upload Keystore
+        run: |
+          keytool -genkey -v -keystore my-upload-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-key-alias -storepass password123 -keypass password123 -dname "CN=Android Release,O=Android,C=US"
+          mv my-upload-key.jks app/
+
       - name: Build Release APK
         env:
           JAVA_TOOL_OPTIONS: "--add-opens=java.base/java.lang=ALL-UNNAMED"
@@ -44,4 +49,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Khahish-Release-App
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          path: app/build/outputs/apk/release/app-release.apk
