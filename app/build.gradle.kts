@@ -62,8 +62,11 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
 
-    // Material Icons Extended (Fixes AddComment, Message, PersonAdd, Videocam, etc.)
+    // Material Icons Extended
     implementation("androidx.compose.material:material-icons-extended")
+
+    // Agora Video SDK (Fixes AgoraManager, joinChannel, RtcEngine errors)
+    implementation("io.agora.rtc:full-sdk:4.3.1")
 
     // Firebase BoM and Core Dependencies
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
@@ -72,7 +75,7 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-storage")
 
-    // Google Sign-In & Credentials (Required for AuthViewModel)
+    // Google Sign-In & Credentials
     implementation("androidx.credentials:credentials:1.3.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
