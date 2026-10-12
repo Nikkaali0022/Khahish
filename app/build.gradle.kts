@@ -62,6 +62,9 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
 
+    // Material Icons Extended (Fixes AddComment, Message, PersonAdd, Videocam, etc.)
+    implementation("androidx.compose.material:material-icons-extended")
+
     // Firebase BoM and Core Dependencies
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-auth")
