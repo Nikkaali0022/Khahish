@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "331924043211",
+    "project_id": "khahish",
+    "storage_bucket": "khahish.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331924043211:android:30ce6ae133d80795bab24e",
+        "android_client_info": {
+          "package_name": "com.aistudio.khahish.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331924043211-79oc6eavppprpdpebtau32a3sncnb8p5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aistudio.khahish.chatapp",
+            "certificate_hash": "91a0ee90f2782c829d3ef0d867fcfb74f967da62"
+          }
+        },
+        {
+          "client_id": "331924043211-h6p1l5dp4lm35id9rj3mg8d3iob0dk61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxLRBHW2eM7HhFJxrn-lnGnvh7BAK8Kxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331924043211-h6p1l5dp4lm35id9rj3mg8d3iob0dk61.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
