@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.aistudio.khahish.chatapp"
+    namespace = "com.example"
     compileSdk = 36
 
     defaultConfig {
